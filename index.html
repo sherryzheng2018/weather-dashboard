@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header class="jumbotron jumbotron-fluid custom-jumbotron">
+        <h1 class="display-2">Weather Dashboard</h1>
+        <p class="lead">A simple weather app for planning your trip</p>
+        
+    </header>
+
+    <main class="container-fuild">
+        <div class="row p-4">
+            <section class="col-12 col-md-4 col-lg-3">
+                <form id="searchFrom">
+                    <h2>Search for a City:</h2>
+                    <input id="searchInput">
+                    <button id="searchBtn">Search</button>
+                </form> 
+                <hr>
+                <div class="col-9" id="searchHistory">
+                    <!-- <button id="seattle" data-city="seattle">Searched City</button> -->
+                </div>
+            </section>
+
+            <section class="col-12 col-md-8 col-lg-9">
+                <div class="row p-3 border rounded" id="current">
+                    <div>
+                        <h2>City Name</h2>
+                        <p id="current-day" class="lead"></p>
+                    </div>
+                    <h5>Temp: <span id="currentTemp"></span></h5>
+                    <h5>Wind: <span id="currentWind"></span></h5>
+                    <h5>Humidity: <span id="currentHum"></span></h5>
+                    <h5>UV Index: <span id="currentUV"></span></h5>
+                </div>
+                <div class="row" id="forecast">
+                    <div class="row">
+                        <h4>5-Day Forecast</h4>
+                    </div>
+                    
+                    <div class="container" id="forecastCards">
+                        <div class="row" id="forcastDiv">
+                          <div class="col-sm singleCard">
+                            <h5>predict day 1</h5>
+                            <icon>Weather icon</icon>
+                            <p class="forcastTemp">Temp: <span></span></p>
+                            <p class="forcastWind">Wind: <span></span></p>
+                            <p class="forcastHum">Humidity: <span></span></p>
+                          </div>
+                          <div class="col-sm singleCard">
+                            <h5>Predict day 2</h5>
+                            <icon>Weather icon</icon>
+                            <p class="forcastTemp">Temp: <span></span></p>
+                            <p class="forcastWind">Wind: <span></span></p>
+                            <p class="forcastHum">Humidity: <span></span></p>
+                          </div>
+                          <div class="col-sm singleCard">
+                            <h5>Predict day 3</h5>
+                            <icon>Weather icon</icon>
+                            <p class="forcastTemp">Temp: <span></span></p>
+                            <p class="forcastWind">Wind: <span></span></p>
+                            <p class="forcastHum">Humidity: <span></span></p>
+                          </div>
+                          <div class="col-sm singleCard">
+                            <h5>Predict day 4</h5>
+                            <icon>Weather icon</icon>
+                            <p class="forcastTemp">Temp: <span></span></p>
+                            <p class="forcastWind">Wind: <span></span></p>
+                            <p class="forcastHum">Humidity: <span></span></p>
+                          </div>
+                          <div class="col-sm singleCard">
+                            <h5>Predict day 5</h5>
+                            <icon>Weather icon</icon>
+                            <p class="forcastTemp">Temp: <span></span></p>
+                            <p class="forcastWind">Wind: <span></span></p>
+                            <p class="forcastHum">Humidity: <span></span></p>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <hr>
+    <footer class="fix-bottom">
+        <button id="clearBtn" type="button" class="btn btn-secondary btn-sm">Clear History</button>
+        <button id="contactBtn" type="button" class="btn btn-secondary btn-sm">Report an Issue</button>
+    </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
+
+<!-- GIVEN a weather dashboard with form inputs
+WHEN I search for a city
+THEN I am presented with current and future conditions for that city and that city is added to the search history
+WHEN I view current weather conditions for that city
+THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+WHEN I view the UV index
+THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+WHEN I view future weather conditions for that city
+THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+WHEN I click on a city in the search history
+THEN I am again presented with current and future conditions for that city -->
