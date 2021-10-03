@@ -18,25 +18,24 @@
         
     </header>
 
-    <main class="container-fuild">
+    <main class="container-fluid">
         <div class="row p-4">
             <section class="col-12 col-md-4 col-lg-3">
                 <form id="searchFrom">
-                    <h2>Search for a City:</h2>
-                    <input id="searchInput">
+                    <h3>Search for a City:</h3>
+                    <input id="searchInput" placeholder="City Name ...">
                     <button id="searchBtn">Search</button>
                 </form> 
                 <hr>
-                <div class="col-9" id="searchHistory">
-                    <!-- <button id="seattle" data-city="seattle">Searched City</button> -->
-                </div>
+                <div id="searchHistory"></div>
             </section>
 
-            <section class="col-12 col-md-8 col-lg-9">
+            <section class="col-12 col-md-8 col-lg-9 hide" id="weatherContent">
                 <div class="row p-3 border rounded" id="current">
-                    <div>
+                    <div id="currentTitle">
                         <h2>City Name</h2>
-                        <p id="current-day" class="lead"></p>
+                        <img width="100" height="100" alt="">
+                        <h3 id="current-day"></h3>
                     </div>
                     <h5>Temp: <span id="currentTemp"></span></h5>
                     <h5>Wind: <span id="currentWind"></span></h5>
@@ -52,35 +51,35 @@
                         <div class="row" id="forcastDiv">
                           <div class="col-sm singleCard">
                             <h5>predict day 1</h5>
-                            <icon>Weather icon</icon>
+                            <img width="70" height="70" alt="">
                             <p class="forcastTemp">Temp: <span></span></p>
                             <p class="forcastWind">Wind: <span></span></p>
                             <p class="forcastHum">Humidity: <span></span></p>
                           </div>
                           <div class="col-sm singleCard">
                             <h5>Predict day 2</h5>
-                            <icon>Weather icon</icon>
+                            <img width="70" height="70" alt="">
                             <p class="forcastTemp">Temp: <span></span></p>
                             <p class="forcastWind">Wind: <span></span></p>
                             <p class="forcastHum">Humidity: <span></span></p>
                           </div>
                           <div class="col-sm singleCard">
                             <h5>Predict day 3</h5>
-                            <icon>Weather icon</icon>
+                            <img width="70" height="70" alt="">
                             <p class="forcastTemp">Temp: <span></span></p>
                             <p class="forcastWind">Wind: <span></span></p>
                             <p class="forcastHum">Humidity: <span></span></p>
                           </div>
                           <div class="col-sm singleCard">
                             <h5>Predict day 4</h5>
-                            <icon>Weather icon</icon>
+                            <img width="70" height="70" alt="">
                             <p class="forcastTemp">Temp: <span></span></p>
                             <p class="forcastWind">Wind: <span></span></p>
                             <p class="forcastHum">Humidity: <span></span></p>
                           </div>
                           <div class="col-sm singleCard">
                             <h5>Predict day 5</h5>
-                            <icon>Weather icon</icon>
+                            <img width="70" height="70" alt="">
                             <p class="forcastTemp">Temp: <span></span></p>
                             <p class="forcastWind">Wind: <span></span></p>
                             <p class="forcastHum">Humidity: <span></span></p>
@@ -95,7 +94,7 @@
     <hr>
     <footer class="fix-bottom">
         <button id="clearBtn" type="button" class="btn btn-secondary btn-sm">Clear History</button>
-        <button id="contactBtn" type="button" class="btn btn-secondary btn-sm">Report an Issue</button>
+        <a href="mailto:sherryzheng2018@gmail.com" id="contactBtn" type="button" class="btn btn-secondary btn-sm">Report an Issue</a>
     </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -3,15 +3,15 @@ let timeDisplayEl = $('#current-day');
 let weatherAPIKey = '1b8540a2a28db686f177dfbd5b8ac2ca';
 let weatherAPIUrl = 'https://api.openweathermap.org/data/2.5/weather?units=imperial';
 let onecallAPIUrl = 'https://api.openweathermap.org/data/2.5/onecall?units=imperial';
-
+var searchListElement = $('#searchHistory');
 //populate the old history list 
-var previousSearchedCities = JSON.parse(localStorage.getItem("historyList")) || [];
+var previousSearchedCities = JSON.parse(localStorage.getItem("historyList"))  || [];
 
 
 // handle displaying the time
 function displayDate() {
-  var rightNow = moment().format('M/DD/YYYY [at] hh:mm a');
-  timeDisplayEl.text(rightNow);
+  var rightNow = moment().format('M/DD/YYYY');
+  timeDisplayEl.text('(' + rightNow + ')');
 }
 
 function weatherForecast(cityName){
@@ -35,37 +35,46 @@ function weatherForecast(cityName){
           // console.log(data.daily[0].temp.day)
           // console.log(data.daily[0].wind_speed)
           // console.log(data.daily[0].humidity)
-          printCurrentWeather(cityName, data.current.temp, data.current.wind_speed, data.current.humidity, data.current.uvi);
+          printCurrentWeather(cityName, data.current.temp, data.current.wind_speed, data.current.humidity, data.current.uvi, data.current.weather[0].icon);
+          console.log(data);
           $('#forecastCards .singleCard').each(function (index) {
             console.log(index)
             $(this).children('h5').text(moment().add(index + 1, 'days').format('M/DD/YYYY'))
-            $(this).children('icon').text(data.daily[index].weather[0].main);
+            $(this).children('img').text(data.daily[index].weather[0].main);
+            $(this).children('img').attr("src", getIconUrl(data.daily[index].weather[0].icon));
             $(this).first().children('p.forcastTemp').children().first().text(data.daily[index].temp.day + " F")
             $(this).first().children('p.forcastWind').children().first().text(data.daily[index].wind_speed + " MPH")
             $(this).first().children('p.forcastHum').children().first().text(data.daily[index].humidity + " %")
-          })
+          }) 
         })
     })
  
 
 }
-// function search() {
-//     console.log("clicked");
-// }
-// $('#searchBtn').click(search);
-
+function getIconUrl(iconId) {
+  return "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
+}
 //add click function to search btn
 $('#searchFrom').submit(function (e) {
   e.preventDefault();
   //   console.log($('#searchInput').val());
-  let cityName = $('#searchInput').val();
-  weatherForecast(cityName); 
-  
+  let currentCity = $('#searchInput').val();
+  weatherForecast(currentCity); 
+  $('#weatherContent').removeClass('hide');
   $('#searchInput').val("");
   console.log("Local storage", previousSearchedCities)
 
-  //append my new city to the previous list 
-  previousSearchedCities.push(cityName);
+  //append my new city to the previous list, with max 8 city in the list
+  if (!previousSearchedCities.includes(currentCity)) {
+    if (previousSearchedCities.length < 8) {
+      previousSearchedCities.push(currentCity);
+    } else {
+      for (i = 0; i <= 7; i++) {
+        previousSearchedCities[i] = previousSearchedCities[i+1];
+      }
+      previousSearchedCities[7] = currentCity;
+    }
+  } 
 
   //Save it into Local Storage as a searchHistoryList 
   localStorage.setItem("historyList", JSON.stringify(previousSearchedCities));
@@ -73,48 +82,71 @@ $('#searchFrom').submit(function (e) {
   printsearchedCities(); 
 });
 
-function printCurrentWeather(city, temp, wind, humidity, uvi) {
+function printCurrentWeather(city, temp, wind, humidity, uvi, iconId) {
   $('#current h2').text(city);
   $('#currentTemp').text(temp + " F");
   $('#currentWind').text(wind + " MPH");
   $('#currentHum').text(humidity + " %");
-  $('#currentUV').text(uvi); // need to add color indicator
+  var uvEl = $('#currentUV');
+  uvEl.text(uvi); // need to add color indicator
+  $('#currentTitle img').attr("src", getIconUrl(iconId));
+  uvEl.removeClass();
+    if(uvi < 3 ) {
+      uvEl.addClass('green')
+    } else if(uvi >=3 && uvi <6) {
+      uvEl.addClass('yellow')
+    } else if(uvi >=6 && uvi <8) {
+      uvEl.addClass('orange')
+    } else if(uvi >=8 && uvi <11) {
+      uvEl.addClass('red')
+    } else {
+      uvEl.addClass('purple')
+    }
 
 }
-displayDate();
-printsearchedCities();
+
+function searchFromHistory(e){
+  weatherForecast(e.target.firstChild.data);
+  $('#weatherContent').removeClass('hide');
+}
 
 function printsearchedCities() {
-  var searchListElement = $('#searchHistory');
   //reset the container 
   searchListElement.empty(); 
 
   //for loop attached to the html page 
   // 1- variable starts at 0; condition ; thirdpart - ++ 
-  var maxlimit = 8 ; 
-  if( previousSearchedCities.length <8){
-    maxlimit = previousSearchedCities.length - 1;
-  }
-  for (i = 0; i <= maxlimit ; i++) {
-    var searchCity = previousSearchedCities[i];
+  for (i = previousSearchedCities.length - 1; i >= 0 ; i--) {
     //Create a button 
-    var newBtn = document.createElement("button"); 
+    var newBtn = $("<button>"); 
+    newBtn.addClass("history-btn");
     //setting display text for the button 
-    newBtn.textContent =  previousSearchedCities[i]; 
+    newBtn.text(previousSearchedCities[i]); 
     console.log("New Button", newBtn)
     //add eventlistiner  listiner for the button 
-    newBtn.onclick = weatherForecast; 
+    newBtn.click(searchFromHistory); 
     //append the button to the div 
     searchListElement.append(newBtn)
   }
 
 }
 
+$('#clearBtn').click(clearSearchHistory);
+
+function clearSearchHistory() {
+  previousSearchedCities = [];
+  searchListElement.text("");
+  localStorage.setItem("historyList", JSON.stringify([]));
+}
+
+displayDate();
+printsearchedCities();
+
 
 
 // To fix:
-// 1. duplicated city name 
-// 2. no onclick event added
+
+
 // 3. add icon to current city name &icon to predict city card
 // 4. add clear history button event
 // 5. UV and color index
