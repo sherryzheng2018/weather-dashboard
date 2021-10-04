@@ -23,7 +23,7 @@
             <section class="col-12 col-md-4 col-lg-3">
                 <form id="searchFrom">
                     <h3>Search for a City:</h3>
-                    <input id="searchInput" placeholder="City Name ...">
+                    <input id="searchInput" placeholder="City Name ..." required>
                     <button id="searchBtn">Search</button>
                 </form> 
                 <hr>
@@ -40,7 +40,8 @@
                     <h5>Temp: <span id="currentTemp"></span></h5>
                     <h5>Wind: <span id="currentWind"></span></h5>
                     <h5>Humidity: <span id="currentHum"></span></h5>
-                    <h5>UV Index: <span id="currentUV"></span></h5>
+                    <!-- <h5>UV Index: <span id="currentUV"></span></h5> -->
+                    <div id="currentUV">UV Index:&nbsp;<div id="curUvValue"></div></div>
                 </div>
                 <div class="row" id="forecast">
                     <div class="row">

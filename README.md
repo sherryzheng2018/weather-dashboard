@@ -1,5 +1,6 @@
 # Weather Dashboard
 
+### Page demo https://sherryzheng2018.github.io/weather-dashboard/
 ## This weather dashboard application provides current and future weather conditions for people who want to plan ahead before their trips.
 
 * When you put a city name in the search form, you are presented with current and future conditions, and that city is added to the search history.
@@ -22,6 +23,5 @@
 
 ### Thank you for using this weather dashboard. Enjoy your trip!
 - - - 
-### Page demo https://sherryzheng2018.github.io/weather-dashboard/
-![website screenshot](assets\weather-dashboard2.png)
-![website screenshot](assets\weather-dashboard1.png)
+![website screenshot](assets/weather-dashboard2.png)
+![website screenshot](assets/weather-dashboard1.png)

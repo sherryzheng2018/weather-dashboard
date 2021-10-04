@@ -18,9 +18,14 @@ function weatherForecast(cityName){
   let cityWeatherUrl = weatherAPIUrl + "&appid=" + weatherAPIKey + "&q=" + cityName;
   fetch(cityWeatherUrl)
     .then(function (response) {
+        //handing error here won't prevent the data function to be called
+        //because api return 404 is still a valid response 
+        //reference: https://stackoverflow.com/questions/39297345/fetch-resolves-even-if-404
       return response.json();
     })
     .then(function (data) {
+      //check if coordinate exists from api response
+      if(data.coord !== undefined){
       //   console.log(data.coord.lat)
       //   console.log(data.coord.lon)
       let onecallUrl = onecallAPIUrl + "&appid=" + weatherAPIKey + "&lat=" + data.coord.lat + "&lon=" + data.coord.lon
@@ -47,13 +52,24 @@ function weatherForecast(cityName){
             $(this).first().children('p.forcastHum').children().first().text(data.daily[index].humidity + " %")
           }) 
         })
+      } else { //if (data.coord !== undefined){
+        $('#weatherContent').addClass('hide');
+        //find the index of incorrect city name
+        let index = previousSearchedCities.indexOf(cityName);
+        if (index > -1) {
+          //remove city name from search history
+          previousSearchedCities.splice(index, 1);
+        }
+        //remove city name from localStorage
+        localStorage.setItem("historyList", JSON.stringify(previousSearchedCities));
+        printsearchedCities();
+        alert("City not found, please try again...");
+      }
     })
  
 
 }
-function getIconUrl(iconId) {
-  return "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
-}
+
 //add click function to search btn
 $('#searchFrom').submit(function (e) {
   e.preventDefault();
@@ -87,7 +103,7 @@ function printCurrentWeather(city, temp, wind, humidity, uvi, iconId) {
   $('#currentTemp').text(temp + " F");
   $('#currentWind').text(wind + " MPH");
   $('#currentHum').text(humidity + " %");
-  var uvEl = $('#currentUV');
+  var uvEl = $('#curUvValue');
   uvEl.text(uvi); // need to add color indicator
   $('#currentTitle img').attr("src", getIconUrl(iconId));
   uvEl.removeClass();
@@ -131,7 +147,9 @@ function printsearchedCities() {
 
 }
 
-$('#clearBtn').click(clearSearchHistory);
+function getIconUrl(iconId) {
+  return "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
+}
 
 function clearSearchHistory() {
   previousSearchedCities = [];
@@ -139,14 +157,6 @@ function clearSearchHistory() {
   localStorage.setItem("historyList", JSON.stringify([]));
 }
 
+$('#clearBtn').click(clearSearchHistory);
 displayDate();
 printsearchedCities();
-
-
-
-// To fix:
-
-
-// 3. add icon to current city name &icon to predict city card
-// 4. add clear history button event
-// 5. UV and color index

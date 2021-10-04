@@ -92,8 +92,15 @@ header {
 }
 
 #currentUV {
-  border: 1px none;
-  border-radius: 6px;
+  display:flex;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+#curUvValue{
+  width: 60px;
+  border-radius: 8px;
+  text-align: center;
 }
 
 #forcastDiv {
